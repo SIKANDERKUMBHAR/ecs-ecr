@@ -1,11 +1,10 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:905418179651:task-definition/simple-web-task:6",
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:905418179651:task-definition/simple-web-task:8",
     "containerDefinitions": [
         {
             "name": "simple-web-container",
             "image": "905418179651.dkr.ecr.ap-southeast-1.amazonaws.com/simple-web:latest",
-            "cpu": 256,
-            "memory": 512,
+            "cpu": 0,
             "portMappings": [
                 {
                     "containerPort": 80,
@@ -32,7 +31,7 @@
     "taskRoleArn": "arn:aws:iam::905418179651:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::905418179651:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 6,
+    "revision": 8,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -71,7 +70,7 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2024-07-29T18:27:23.643Z",
+    "registeredAt": "2024-07-29T18:40:14.137Z",
     "registeredBy": "arn:aws:iam::905418179651:user/main-user",
     "tags": []
 }
