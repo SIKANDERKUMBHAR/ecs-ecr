@@ -5,12 +5,12 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: ap-southeast-1                  # Set this to your preferred AWS region
-  ECR_REPOSITORY: simple-web                  # Set this to your Amazon ECR repository name
-  ECS_SERVICE: simple-web-service            # Set this to your Amazon ECS service name
-  ECS_CLUSTER: simple-web-cluster            # Set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: ecs-task.json # Path to your ECS task definition file
-  CONTAINER_NAME: simple-web-container       # Name of the container in the containerDefinitions section of your task definition
+  AWS_REGION: ap-southeast-1                   # Set this to your AWS region
+  ECR_REPOSITORY: simple-web                   # Set this to your Amazon ECR repository name
+  ECS_SERVICE: simple-web-service             # Set this to your Amazon ECS service name
+  ECS_CLUSTER: simple-web-cluster             # Set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: ecs-task.json          # Path to your Amazon ECS task definition file
+  CONTAINER_NAME: simple-web-container        # Set this to the name of the container in the containerDefinitions section of your task definition
 
 permissions:
   contents: read
