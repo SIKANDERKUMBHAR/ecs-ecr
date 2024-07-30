@@ -4,22 +4,33 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  AWS_REGION: ap-southeast-1                   # Set this to your AWS region
+  ECR_REPOSITORY: simple-web                   # Set this to your Amazon ECR repository name
+  ECS_SERVICE: simple-web-service             # Set this to your Amazon ECS service name
+  ECS_CLUSTER: simple-web-cluster             # Set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: ecs-task.json          # Path to your Amazon ECS task definition file
+  CONTAINER_NAME: simple-web-container        # Set this to the name of the container in the containerDefinitions section of your task definition
+
+permissions:
+  contents: read
+
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: production
+    environment: Prod
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-southeast-1
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -29,25 +40,25 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: simple-web
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: latest
+
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task-definition.json
-        container-name: simple-web-container
-        image: ${{ steps.build-image.outputs.image }}
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: ${{ env.CONTAINER_NAME }}
+        image: ${{ env.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: simple-web-service
-        cluster: simple-web-cluster
+        service: ${{ env.ECS_SERVICE }}
+        cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
