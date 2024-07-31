@@ -1,12 +1,17 @@
-# Use the official Nginx image from the Docker Hub
-FROM nginx:alpine
+# Use an official Python runtime as the base image
+FROM python:3.9-slim
 
-# Copy the HTML file to the Nginx html directory
-COPY index.html /usr/share/nginx/html/
+# Set the working directory in the container
+WORKDIR /app
 
-# Expose port 80
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install the required packages
+RUN pip install --no-cache-dir flask gunicorn
+
+# Make port 80 available to the world outside this container
 EXPOSE 80
 
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
-
+# Run the application with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:app"]
