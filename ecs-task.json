@@ -1,14 +1,14 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:905418179651:task-definition/simple-web-task:13",
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:905418179651:task-definition/ecs-task-testing:3",
     "containerDefinitions": [
         {
-            "name": "simple-web-container",
-            "image": "905418179651.dkr.ecr.ap-southeast-1.amazonaws.com/simple-web:latest",
+            "name": "myapp",
+            "image": "905418179651.dkr.ecr.ap-southeast-1.amazonaws.com/simple-website:latest",
             "cpu": 0,
             "portMappings": [
                 {
-                    "containerPort": 80,
-                    "hostPort": 80,
+                    "containerPort": 8080,
+                    "hostPort": 8080,
                     "protocol": "tcp"
                 }
             ],
@@ -19,7 +19,7 @@
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "/ecs/simple-web",
+                    "awslogs-group": "/ecs/myapp",
                     "awslogs-region": "ap-southeast-1",
                     "awslogs-stream-prefix": "ecs"
                 }
@@ -27,11 +27,10 @@
             "systemControls": []
         }
     ],
-    "family": "simple-web-task",
-    "taskRoleArn": "arn:aws:iam::905418179651:role/ecsTaskExecutionRole",
-    "executionRoleArn": "arn:aws:iam::905418179651:role/ecsTaskExecutionRole",
+    "family": "ecs-task-testing",
+    "executionRoleArn": "arn:aws:iam::905418179651:role/myEcsTaskExectuionRole",
     "networkMode": "awsvpc",
-    "revision": 13,
+    "revision": 3,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -46,9 +45,6 @@
         },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
         },
         {
             "name": "ecs.capability.execution-role-ecr-pull"
@@ -70,7 +66,7 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2024-07-30T16:16:07.363Z",
+    "registeredAt": "2024-08-01T15:51:10.485Z",
     "registeredBy": "arn:aws:iam::905418179651:user/main-user",
     "tags": []
 }

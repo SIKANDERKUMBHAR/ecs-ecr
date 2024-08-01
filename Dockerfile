@@ -1,17 +1,20 @@
-# Use an official Python runtime as the base image
-FROM python:3.9-slim
+# Use the official Node.js image from the Docker Hub
+FROM node:14
 
-# Set the working directory in the container
-WORKDIR /app
+# Create and change to the app directory
+WORKDIR /usr/src/app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy application dependency manifests to the container image
+COPY package*.json ./
 
-# Install the required packages
-RUN pip install --no-cache-dir flask gunicorn
+# Install dependencies
+RUN npm config set registry https://registry.npmmirror.com/ && npm install
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Copy the application code to the container image
+COPY . .
 
-# Run the application with Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:app"]
+# Make the container's port 8080 available to the outside world
+EXPOSE 8080
+
+# Run the web service on container startup
+CMD ["npm", "start"]
