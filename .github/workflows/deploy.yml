@@ -8,10 +8,10 @@ on:
 env:
   AWS_REGION: ap-southeast-1                   # Set this to your AWS region
   ECR_REPOSITORY: simple-website               # Set this to your Amazon ECR repository name
-  ECS_SERVICE: myapp-service                  # Set this to your Amazon ECS service name
-  ECS_CLUSTER: FirstCluster                   # Set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: ecs-task.json          # Path to your Amazon ECS task definition file
-  CONTAINER_NAME: myapp                       # Set this to the name of the container in the containerDefinitions section of your task definition
+  ECS_SERVICE: myapp-service                   # Set this to your Amazon ECS service name
+  ECS_CLUSTER: FirstCluster                    # Set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: task-definition.json    # Path to your Amazon ECS task definition file
+  CONTAINER_NAME: myapp                        # Set this to the name of the container in the containerDefinitions section of your task definition
 
 permissions:
   contents: read
@@ -51,8 +51,15 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task-definition.json
-        container-name: myapp
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
 
+    - name: Deploy to Amazon ECS
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        service: ${{ env.ECS_SERVICE }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        wait-for-service-stability: true
 
