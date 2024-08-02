@@ -11,7 +11,7 @@ env:
   ECS_SERVICE: myapp-service                   # Set this to your Amazon ECS service name
   ECS_CLUSTER: FirstCluster                    # Set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: task-definition.json    # Path to your Amazon ECS task definition file
-  CONTAINER_NAME: myapp                        # Set this to the name of the container in the containerDefinitions section of your task definition
+  CONTAINER_NAME: myapp           # Set this to the name of the container in the containerDefinitions section of your task definition
 
 permissions:
   contents: read

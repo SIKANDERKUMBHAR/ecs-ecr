@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:905418179651:task-definition/ecs-task-testing:7",
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:905418179651:task-definition/ecs-task-testing:8",
     "containerDefinitions": [
         {
             "name": "myapp",
@@ -30,7 +30,7 @@
     "family": "ecs-task-testing",
     "executionRoleArn": "arn:aws:iam::905418179651:role/myEcsTaskExectuionRole",
     "networkMode": "awsvpc",
-    "revision": 7,
+    "revision": 8,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -66,7 +66,7 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2024-08-02T05:57:00.039Z",
+    "registeredAt": "2024-08-02T06:49:50.804Z",
     "registeredBy": "arn:aws:iam::905418179651:user/main-user",
     "tags": []
 }
