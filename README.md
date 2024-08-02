@@ -4,9 +4,9 @@ This project sets up a robust and scalable infrastructure on AWS using Terraform
 
 ## 🚀 Features
 
+- **VPC Configuration**: Custom VPC setup with public and private subnets
 - **ECS Cluster**: Easily deployable and scalable container management
 - **Application Load Balancer**: Efficient distribution of incoming traffic
-- **VPC Configuration**: Secure network setup with public and private subnets
 - **Auto Scaling**: Automatically adjust the number of tasks based on demand
 - **CloudWatch Integration**: Comprehensive logging and monitoring
 - **Security Groups**: Properly configured for enhanced security
@@ -16,9 +16,11 @@ This project sets up a robust and scalable infrastructure on AWS using Terraform
 ## 🏗️ Infrastructure Components
 
 1. **VPC and Networking**:
-   - Creates a custom VPC with public and private subnets
-   - Sets up Internet Gateway and NAT Gateways for secure outbound traffic
-   - Configures route tables for proper network isolation
+   - Creates a custom VPC with a CIDR block of 172.17.0.0/16
+   - Sets up public and private subnets across multiple Availability Zones
+   - Configures Internet Gateway for public subnets
+   - Sets up NAT Gateways in public subnets for outbound internet access from private subnets
+   - Configures route tables for proper network isolation and internet access
 
 2. **ECS Cluster and Service**:
    - Deploys an ECS cluster using Fargate for serverless container management
@@ -73,7 +75,7 @@ To use the GitHub Actions workflow:
 1. Ensure your repository has the necessary secrets set up:
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
-2. Customize the `.github/workflows/deploy-to-ecs.yml` file if needed.
+2. Customize the `.github/workflows/deploy.yml` file if needed.
 3. Push changes to the `main` branch to trigger the deployment.
 
 ## 🔧 Customization
@@ -83,10 +85,14 @@ This configuration uses variables extensively, allowing for easy customization:
 - Adjust the `app_image` variable to deploy your own container image.
 - Modify `fargate_cpu` and `fargate_memory` to allocate resources as needed.
 - Customize the `desired_count` to set the number of tasks you want running.
+- Update the `az_count` variable to change the number of Availability Zones used.
+- Modify the VPC CIDR block in the `aws_vpc` resource if needed.
 - Update the GitHub Actions workflow to match your specific deployment needs.
 
 ## 🌟 Benefits
 
+- **Isolated Network**: Custom VPC provides network isolation and security.
+- **High Availability**: Multi-AZ setup ensures resilience and fault tolerance.
 - **Infrastructure as Code**: Easily version, share, and replicate your infrastructure.
 - **Scalability**: Designed to handle increased load by adjusting task count.
 - **Cost-Effective**: Uses Fargate to avoid managing EC2 instances.
