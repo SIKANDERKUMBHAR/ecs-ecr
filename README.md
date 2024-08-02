@@ -1,6 +1,6 @@
-# Terraform ECS Deployment
+# Terraform ECS Deployment with GitHub Actions CI/CD
 
-This Terraform configuration sets up a robust and scalable infrastructure on AWS, primarily focusing on deploying applications using Amazon ECS (Elastic Container Service) with Fargate.
+This project sets up a robust and scalable infrastructure on AWS using Terraform, primarily focusing on deploying applications using Amazon ECS (Elastic Container Service) with Fargate. It also includes a GitHub Actions workflow for continuous integration and deployment.
 
 ## 🚀 Features
 
@@ -11,6 +11,7 @@ This Terraform configuration sets up a robust and scalable infrastructure on AWS
 - **CloudWatch Integration**: Comprehensive logging and monitoring
 - **Security Groups**: Properly configured for enhanced security
 - **IAM Roles**: Least privilege principle applied for ECS tasks
+- **GitHub Actions**: Automated CI/CD pipeline for continuous deployment
 
 ## 🏗️ Infrastructure Components
 
@@ -36,7 +37,14 @@ This Terraform configuration sets up a robust and scalable infrastructure on AWS
    - Integrates with CloudWatch for centralized logging
    - Configures health checks for the target group
 
+6. **CI/CD Pipeline**:
+   - Uses GitHub Actions for automated deployments
+   - Builds and pushes Docker images to Amazon ECR
+   - Updates ECS task definitions and deploys to ECS
+
 ## 🛠️ Usage
+
+### Terraform Deployment
 
 1. Ensure you have Terraform installed and AWS credentials configured.
 2. Clone this repository.
@@ -51,6 +59,23 @@ This Terraform configuration sets up a robust and scalable infrastructure on AWS
 
 5. After successful application, the ALB DNS name will be outputted for accessing your application.
 
+### GitHub Actions Workflow
+
+The included GitHub Actions workflow automates the deployment process:
+
+1. On push to the `main` branch, the workflow is triggered.
+2. It builds a Docker image and pushes it to Amazon ECR.
+3. The ECS task definition is updated with the new image.
+4. The updated task is deployed to the ECS cluster.
+
+To use the GitHub Actions workflow:
+
+1. Ensure your repository has the necessary secrets set up:
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+2. Customize the `.github/workflows/deploy-to-ecs.yml` file if needed.
+3. Push changes to the `main` branch to trigger the deployment.
+
 ## 🔧 Customization
 
 This configuration uses variables extensively, allowing for easy customization:
@@ -58,6 +83,7 @@ This configuration uses variables extensively, allowing for easy customization:
 - Adjust the `app_image` variable to deploy your own container image.
 - Modify `fargate_cpu` and `fargate_memory` to allocate resources as needed.
 - Customize the `desired_count` to set the number of tasks you want running.
+- Update the GitHub Actions workflow to match your specific deployment needs.
 
 ## 🌟 Benefits
 
@@ -66,7 +92,8 @@ This configuration uses variables extensively, allowing for easy customization:
 - **Cost-Effective**: Uses Fargate to avoid managing EC2 instances.
 - **Security-Focused**: Implements best practices for network and access management.
 - **Maintainable**: Well-structured code with clear separation of concerns.
+- **Automated Deployments**: Continuous deployment with GitHub Actions.
 
+## 🤝 Contributing
 
-
-This project is open-source and available under the MIT License.
+Contributions are welcome! Please feel free to submit a Pull Request.
